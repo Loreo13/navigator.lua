@@ -101,6 +101,16 @@ end
 -- TODO end
 
 local setups = {
+  rnix_lsp = {
+    root_dir = function(fname)
+      return util.root_pattern("flake.nix", ".git", "flake.lock")(fname) or util.path.dirname(fname)
+    end,
+    on_attach = on_attach,
+    filetypes = {"nix"},
+    message_level = vim.lsp.protocol.MessageType.error,
+    cmd = {"rnix-lsp"}
+  },
+
   clojure_lsp = {
     root_dir = function(fname)
       return util.root_pattern("deps.edn", "build.boot", "project.clj", "shadow-cljs.edn", "bb.edn", ".git")(fname)
@@ -278,7 +288,7 @@ local servers = {
   "jedi_language_server", "jdtls", "sumneko_lua", "vimls", "html", "jsonls", "solargraph", "cssls",
   "yamlls", "clangd", "ccls", "sqls", "denols", "graphql", "dartls", "dotls",
   "kotlin_language_server", "nimls", "intelephense", "vuels", "phpactor", "omnisharp",
-  "r_language_server", "rust_analyzer", "terraformls", "svelte", "texlab", "clojure_lsp"
+  "r_language_server", "rust_analyzer", "terraformls", "svelte", "texlab", "clojure_lsp", "rnix_lsp"
 }
 
 local has_lspinst = false
